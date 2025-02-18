@@ -1,0 +1,16 @@
+https://www.cbsnews.com/latest/rss/main
+https://feeds.npr.org/1004/rss.xml
+https://feeds.npr.org/1003/rss.xml
+https://www.newyorker.com/feed/news
+https://www.politico.com/rss/politicopicks.xml
+https://www.theguardian.com/us-news/rss
+https://qz.com/rss
+https://www.newsweek.com/rss
+https://news.yahoo.com/rss/world
+https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml
+https://feeds.nbcnews.com/nbcnews/public/world
+https://feeds.nbcnews.com/nbcnews/public/news
+https://www.cbsnews.com/latest/rss/main
+http://rss.cnn.com/rss/cnn_topstories.rss
+https://abcnews.go.com/abcnews/usheadline
+https://www.cbsnews.com/latest/rss/mains

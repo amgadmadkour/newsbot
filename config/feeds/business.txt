@@ -1,0 +1,4 @@
+# Business News RSS Feeds
+https://feeds.bbci.co.uk/news/business/rss.xml
+https://rss.nytimes.com/services/xml/rss/nyt/Business.xml
+https://www.ft.com/rss/markets
