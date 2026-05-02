@@ -23,17 +23,32 @@ cd newsbot
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Activate venv
-source .venv/bin/activate
-
 # Install dependencies
 uv sync
 ```
 
 ## Usage
 
+Run the project from the repository root:
+
 ```bash
-uv run main.py
+uv run newsbot
+```
+
+The app reads RSS feed URLs from `config/feeds/*.txt`, fetches articles, prints them to the console, and writes logs to `newsbot.log`.
+
+## Running Tests
+
+Run the unit test suite from the repository root:
+
+```bash
+uv run pytest
+```
+
+For quieter output:
+
+```bash
+uv run pytest -q
 ```
 
 ## License

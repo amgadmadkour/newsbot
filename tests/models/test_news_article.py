@@ -27,8 +27,12 @@ def test_article_equality(article):
         url="http://different.com",
         published="2024-02-15",
     )
+    different_publish_date = NewsArticle(
+        title="Test", body="Content", url="http://test.com", published="2024-02-16"
+    )
     different_type = "Not an article"
 
     assert article == same_article
     assert article != different_article
+    assert article != different_publish_date
     assert article != different_type
