@@ -44,20 +44,20 @@ def test_fetch_news_uses_fallback_fields(monkeypatch, tmp_path):
             bozo=False,
             entries=[
                 {
-                    "title": "Summary article",
-                    "summary": "Summary",
+                    "title": "<b>Summary</b> &amp; article",
+                    "summary": "<p>Summary&nbsp;<strong>body</strong></p>",
                     "link": "https://example.com/summary",
                     "published": "2026-05-02",
                 },
                 {
                     "title": "Updated article",
-                    "description": "Description",
+                    "description": "Description\n\nwith     whitespace",
                     "link": "https://example.com/updated",
                     "updated": "2026-05-01",
                 },
                 {
                     "title": "Content article",
-                    "content": [{"value": "Content body"}],
+                    "content": [{"value": "<div>Content<br>body</div>"}],
                     "link": "https://example.com/content",
                 },
                 {
@@ -77,15 +77,46 @@ def test_fetch_news_uses_fallback_fields(monkeypatch, tmp_path):
         "https://example.com/content",
     ]
     assert [article.body for article in articles] == [
-        "Summary",
-        "Description",
+        "Summary body",
+        "Description with whitespace",
         "Content body",
     ]
+    assert articles[0].title == "Summary & article"
     assert [article.published for article in articles] == [
         "2026-05-02",
         "2026-05-01",
         "",
     ]
+
+
+def test_fetch_news_assigns_category_from_feed_filename(monkeypatch, tmp_path):
+    feed_dir = tmp_path / "feeds"
+    feed_dir.mkdir()
+    (feed_dir / "business.txt").write_text("https://example.com/biz")
+    (feed_dir / "general.txt").write_text("https://example.com/gen")
+
+    def parse(url):
+        slug = url.rsplit("/", 1)[-1]
+        return SimpleNamespace(
+            bozo=False,
+            entries=[
+                {
+                    "title": f"Title {slug}",
+                    "summary": "body",
+                    "link": f"https://example.com/{slug}/article",
+                }
+            ],
+        )
+
+    monkeypatch.setattr("newsbot.services.fetchers.rss_fetcher.feedparser.parse", parse)
+
+    articles = RSSFetcher(config_dir=feed_dir).fetch_news()
+
+    categories = {article.url: article.category for article in articles}
+    assert categories == {
+        "https://example.com/biz/article": "business",
+        "https://example.com/gen/article": "general",
+    }
 
 
 def test_fetch_news_skips_failed_feeds(monkeypatch, tmp_path):

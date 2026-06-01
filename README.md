@@ -35,7 +35,17 @@ Run the project from the repository root:
 uv run newsbot
 ```
 
-The app reads RSS feed URLs from `config/feeds/*.txt`, fetches articles, prints them to the console, and writes logs to `newsbot.log`.
+The app reads RSS feed URLs from `config/feeds/*.txt`, fetches articles, prints them to the console, and writes logs to `newsbot.log`. Each feed file's name (e.g. `business.txt`, `general.txt`) is used as the category for the articles it contains.
+
+To write the results as an HTML page grouped by category, with a category navigation list on the left-hand side, use `--html`:
+
+```bash
+# Writes to newsbot.html
+uv run newsbot --html
+
+# Or choose the output path
+uv run newsbot --html report.html
+```
 
 ## Running Tests
 

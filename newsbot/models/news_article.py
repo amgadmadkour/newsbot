@@ -8,6 +8,7 @@ class NewsArticle:
     body: str
     url: str
     published: str
+    category: str = "general"
 
     def __str__(self) -> str:
         return json.dumps(
@@ -16,5 +17,6 @@ class NewsArticle:
                 "body": self.body,
                 "url": self.url,
                 "published": self.published,
+                "category": self.category,
             }
         )
