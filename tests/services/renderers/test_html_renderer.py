@@ -58,3 +58,41 @@ def test_render_html_handles_no_articles():
 
     assert "0 articles" in page
     assert "<section" not in page
+
+
+def test_render_html_formats_dates_and_sources():
+    articles = [
+        NewsArticle(
+            title="RSS date",
+            body="",
+            url="https://www.example.com/a",
+            published="Sun, 31 May 2026 18:31:37 GMT",
+            category="general",
+        ),
+        NewsArticle(
+            title="Unparseable date",
+            body="",
+            url="https://news.example.org/b",
+            published="sometime",
+            category="general",
+        ),
+    ]
+
+    page = render_html(articles)
+
+    assert '<time datetime="2026-05-31T18:31:37+00:00">May 31, 2026</time>' in page
+    assert "<span>sometime</span>" in page
+    # Source is the host name without a leading "www.".
+    assert '<span class="source">example.com</span>' in page
+    assert '<span class="source">news.example.org</span>' in page
+
+
+def test_render_html_marks_truncated_summary():
+    page = render_html([_article("Short", "general")])
+    assert "Body for Short…" not in page
+
+    long = NewsArticle(
+        title="Long", body="word " * 100, url="https://example.com/l",
+        published="", category="general",
+    )
+    assert "…</p>" in render_html([long])

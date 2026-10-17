@@ -37,7 +37,7 @@ uv run newsbot
 
 The app reads RSS feed URLs from `config/feeds/*.txt`, fetches articles, prints them to the console, and writes logs to `newsbot.log`. Each feed file's name (e.g. `business.txt`, `general.txt`) is used as the category for the articles it contains.
 
-To write the results as an HTML page grouped by category, with a category navigation list on the left-hand side, use `--html`:
+To write the results as an HTML page grouped by category, with a category navigation list on the left-hand side, use `--html`. The page is self-contained and responsive, follows the system light/dark theme (with a toggle), and has a filter box (press `/` to focus it):
 
 ```bash
 # Writes to newsbot.html
